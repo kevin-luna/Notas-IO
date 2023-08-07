@@ -1,0 +1,49 @@
+\chapter{El problema del Transporte}
+	\section{Cálculo de la solución inicial}
+	
+	%Pendiente
+	%\subsection{Método de la esquina noroeste}
+	%\subsection{Método de costo mínimo}
+	
+	\subsection{Método de Voguel}
+	
+	\begin{enumerate}
+		\item Construir la matriz de transporte con las fábricas en la columnna de la izquierda y las bodegas en las columnas restantes. Se agrega a cada celda el costo de envío de cada fábrica a cada bodega.
+		
+		\item Verificar si el problema está balanceaado. Si la suma de las capacidades de las bodegas y las fábricas no es igual, agregamos una fila o una columna según donde haga falta, y su capacidaad será la cantidad faltante.
+		
+		\item Si debemos minimizar calculamos las diferencias entre los elementos más pequeños de cada renglóń y cada columna; si debemos maximizar calculamos las diferencias entre los elementos más grandes en cada renglón y en cada columna.
+		
+		\item Seleccionamos el renglón o columna con la diferencia más grande, si existe un empate se selecciona el reglón que contenga el costo menor (en caso de minimizar) o el costo mayor (en caso de maximizar). Si el empate persiste se selecciona la celda que pueda recibir más unidades. Si el empate persiste se selecciona cualquiera de las celdas que empataron.
+		
+		\item En caso de satisfacer por completo la demanda de una columna o un renglón, se cancelan las celdas que hayan quedado vacías en dicha columna o renglón.
+		
+		\item Se repiten el paso 3 al 5 hasta que ya no haya celdas que rellenar.
+	\end{enumerate}
+
+	\section{Prueba de la degeneración}
+	
+	Si $R+C-1 < A$, en donde $A$ es la cantidad de asignaciones en la solución, entonces la solución es degenerada. En tal caso es necesario agregar un valor $\mathcal{E}$ (Epsilon) que nos ayude a calcular los índices de mejoramiento para todas las celdas vacías. Se puede comenzar probando la celda vacía con el costo menor.
+
+	\section{Prueba de optimalidad}
+	
+	\subsection{Método del cruce del Arroyo}
+	Comenzando a partir de cada celda vacía se intenta construir una trayectoria cerrada saltando horizontalmente y verticalmente hacia otras celdas, no se permiten saltos en diagonal. El índice de mejoramiento de cada celda se calcula sumando el costo de cada celda de la trayectoria alternando signos a partir de la celda vacía donde se comienza. La celda de partida siempre tiene signo positivo.
+	
+	\subsection{Método de Modi}
+	
+	\begin{itemize}
+		\item Se calculan los valores de $R_{i}$ y $K_{j}$ para cada renglón y cada columna.
+		\item Siempre se comienza con $R_ {1}=0$.
+		\item Se calcula el resto de los valores mediante $R_{i}+K_{j}=C{ij}$
+	\end{itemize}
+	
+	Si todos los índices de mejoramiento son positivos o cero (en caso de minimización), entonces hemos llegado a la solución, pero si existe por lo menos un negativo, debemos mover unidades; para el caso de maximización, si todos los valores son negativos o cero, significa que hemos llegado a la solución, pero si hay por lo menos un índice positivo significa que debemos mover unidades.
+	
+	\section{Reasignación de unidades \small{(Caso especial, mejorando la solución)}}
+	
+	Para el caso de minimización se selecciona la celda con el índice de mejoramiennto más negativo, y para el caso de maximización se busca la que contegna el índice más positivo.
+	
+	Posteriormente se traza una trayectoria cerrada a partir de la celda seleccionada, como se mostró en el método del cruce del arroyo. Se marcan los signos y se selecciona la celda con signo negativo que contenga la \textbf{asignación más pequeña}. Si la solución obtenida es degenerada y una celda perteneciente a la trayectoria trazada contiene el valor Epsilon y un signo negativo no será posible mejorar la solución, por lo tanto debemos buscar otra celda para asignar el valor Epsilon y volver a calcular los índices de mejoramiento.
+	%Pendiente
+	%\section{Ejercicios propuestos}

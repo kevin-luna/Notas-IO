@@ -1,0 +1,57 @@
+	\chapter{Redes}
+	
+	\section{Método del camino crítico}
+	
+	\section{Conceptos}
+	
+	\begin{itemize}
+		\item Se le llama \textbf{camino crítico} a la serie de actividades que indica la duración total del proyecto.
+		
+		\item El \textbf{tiempo medio} ($M$) de una actividad es el tiempo normal que se necesita para la ejecución de las actividades.
+		
+		\item El \textbf{tiempo óptimo} ($o$) de una actividad es el que representa el tiempo mínimo posible sin importar el costo.
+		
+		\item El \textbf{tiempo pésimo} ($p$) de una actividad es un tiempo excepcionalmente grande que pudiera presentarse ocasionalmente como consecuencia de algún percance no previsto.
+		
+		\item El \textbf{costo normal} ($\$N$) de una actividad es el coste por realizar la actividad en tiempo estándar.
+		
+		\item El \textbf{coto límite} ($\$L$) de una actividad es el costo por realizar la actividad a tiempo óptimo.
+		
+		\item El \textbf{tiempo estándar} (\textit{t}) de una actividad es
+		\[t = \frac{o+4M+p}{6}\]
+		
+		\item La \textbf{pendiente} (\textit{m}) de una actividad es
+		\[m=\frac{L-N}{t-o}\]
+	\end{itemize}
+	
+	\section{Consideraciones para realizar el diagrama de actividades}
+	
+	\begin{itemize}
+		\item Si una actividad es secuencia de múltiples actividades, se coloca a continuación de la activididad que se encuentre más adelantada.
+		
+		\item Actividades con $t=0$ se representan con una línea vertical.
+	\end{itemize}
+	
+	\section{Compresión de la red}
+	
+	Una vez realizado el diagrama de la red de actividades podemos comenzar con la compresión de las actividades. Ya que el tiempo total del proyecto depende del tiempo que toma la ruta crítica, procederemos a intentar comprimir las actividades que pertenecen a ella, tomando como base el tiempo estándar de cada actividd.
+	
+	Se comienza calculando el tiempo estándar y la pendiente de cada actividad.
+	
+	\subsection{Consideraciones para la compresión}
+	\begin{itemize}
+		
+		\item Las actividades donde $t=o$ no se pueden comprimir.
+		
+		\item Solo es posible comprimir hasta $t-o$ días una actividad, sí y solo sí $t>o$.
+		
+		\item La compresión máxima que se puede realizar para una red de $n$ actividades está dada por:
+		
+		\[\sum_{i=1}^{n} o_{i}\]
+		
+		donde $o_i$ es el tiempo óptimo de la i-ésima actividad.
+		
+		\item Si en alguna iteración la red tiene más de un ruta crítica, será necesario comprimir por lo menos una actividad en cada una de ellas.
+		
+		\item Si es posible comprimir más de una actividad en la ruta crítica se elige aquella cuya $m$ se mínima.
+	\end{itemize}

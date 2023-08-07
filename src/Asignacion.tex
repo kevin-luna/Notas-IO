@@ -1,0 +1,37 @@
+	\chapter{El problema de asignación}
+	Los problemas de asignación forman una subclase del problema de transporte.
+	
+	\section{El método Húngaro}
+	
+	\begin{enumerate}
+		\item Elaborar la matriz de costos de oportunidad como si de un problema de transporte se tratase.
+		\item Verificar y manejar los casos especiales.
+		\item Una vez manejados los casos especiales, se procede a buscar el elemento más pequeño de cada fila y se resta de cada elemento de la fila.
+		\item Se repite el paso anterior para los elementos de cada columna.
+		\item Determine si la solución es óptima intentando cubrir todos los ceros de la matriz utilizando $\max(R,C)$ líneas rectas, si esto es posible hemos llegado a la solución óptima.
+		
+		\item Si no se ha llegado a la solución óptima buscamos el elemento más pequeño de los no cubiertos por alguna línea, se suma a cada número que se encuentre en la intersección de dos líneas y se resta de todos los números no cubiertos por alguna línea. El resto de los números se mantienen igual. Al terminar, repita el paso anterior.
+	\end{enumerate}
+	
+	\section{Casos especiales}
+	
+	\subsection{Costos negativos}
+	
+	Se agrega a cada celda un valor igual que el costo más negativo.
+	
+	\subsection{Maximización}
+	
+	Se busca el elemento más grande de la matriz de costos y cada uno de los elementos de la matriz se reemplazan por la diferencia entre dicho valor y el costo en cada celda. Después se procede de manera normal con el método Húngaro.
+	
+	\subsection{Asignaciones prohibidas}
+
+	Si existen celdas en donde no podamos realizar asignaciones debido a las restricciones del problema, asignamos a la celda un costo más alto que el mayor de toda la matriz (en caso de maximización) o un costo más bajo que el mínimo de toda la matriz (en caso de minimización), así garantizamos que las celdas que los contienen nunca formarán parte de la solución final.
+	
+	\subsection{Soluciones óptimas múltiples}
+	
+	Si en el momento de realizar la asignación para la solución final aparecen opciones múltiples de ceros para asignar existen múltiples soluciones.
+	
+	\subsection{Problema no balanceado}
+	
+	Se agrega una fila o columna ficticia, según sea necesario, y su capacidad será la cantidad de unidades faltantes.
+	

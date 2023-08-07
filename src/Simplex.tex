@@ -1,0 +1,54 @@
+\chapter{El método simplex}
+\section*{Normalización del modelo}
+
+\begin{center}
+	\begin{tabbing}
+		\textbf{Tipo de desigualdad} \= \textbf{Variable a agregar} \\
+		$\leq$ \> $+S$ \\
+		$\geq$ \> $-S+A$ \\
+		$=$ \> $+A$
+	\end{tabbing}
+\end{center}
+
+\section{Algoritmo}
+
+\begin{enumerate}
+	\item Se rellena la tabla simplex con las columnas $C_j$ (coeficientes de las variables básicas), VB (variables básicas), Sol (la solución a las restricciones), y una columna para cada variable del modelo, de holgura y artificial; y $\theta$ (el cociente de columna solución entre el valor de la fila en la columna pivote).
+	
+	\item Se selecciona la columna pivote. Para maximizar se elige aquella que contenga el valor más positivo en la fila $C_j-Z_j$, y para minimizar se elige la que tenga el valor más negativo.
+	
+	\item Se selecciona como fila pivote aquella que contenga el menor cociente positivo en la columna $\theta$.
+	
+	\item Una vez seleccionada la columna y fila pivote, se divide toda la fila entre el pivote (valor que se encuentra en la intersección entre la fila y columna pivote) para convertir el pivote en 1.
+	
+	\item Se convierten todos los valores en la columna pivote en ceros; esto se hace multiplicando toda la fila pivote por el inverso aditivo del valor en la columna pivote de la fila que se desea eliminar, se suman los valores de ambas filas y se reemplazan en la fila a eliminar.
+	
+	\item Se calcula la fila $Z_j$ multiplicando los coeficientes en $C_j$ por cada valor en la fila correspondiente y sumando los valores obtenidos para cada columna.
+	
+	\item Se calcula la fila $C_j-Z_j$ restando los coeficientes de la función objetivo con el valor correspondiente de cada columna.
+	
+	\item Se realiza la prueba de optimalidad de la solución. Para el caso de maximización se comprueba que todos los valores en la fila $C_j-Z_j$ sean menores o iguales a cero, si esas se ha llegado a la solución final. Para minimización se ha llegado a la solución si todos los valores en la fila $C_j-Z_j$ son mayores o iguales a cero.
+\end{enumerate}
+
+
+
+\section{El método de la M}
+Se completa la función objetivo agregando las variables de holgura $S$ y las variables artificiales $A$ que se utilizaron para convertir las desigualdades en ecuaciones. Se agrega el coeficiente a las variables artificiales; $-M$ para el caso de maximización y $+M$ para minimización.
+
+\section{El método de dos fases}
+A diferencia del método de la gran M, para este método se agregan coeficientes de 1 a las variables artificiales y coeficientes de 0 para todas las demás en la función objetivo, por lo tanto solamente puede ser utilizado en modelos con restricciones del tipo $\geq$ o $=$. La primera fase termina cuando ya no aparecen variables artificiales en la solución final. Después se procede con el método simplex tradicional reemplazando los coeficientes 0 de las variables básicas que aparecen en la solución con sus coeficientes originales.
+
+\section{Casos especiales}
+
+\begin{itemize}
+	\item \textbf{Soluciones múltiples:} Si $C_j - Z_j = 0$ para cualquier variable que no es solución, entonces existen soluciones óptimas múltiples.
+	
+	\item \textbf{Solución no factible (restricciones en conflicto)}: Si la solución final contiene una variable artificial, entonces no existe solución factible y se tienen restricciones en conflicto.
+	
+	\item \textbf{Solución no acotada:} En la columna $\theta$ todos los cocientes son negativos o infinito.
+	
+	\item \textbf{Empate para la variable que sale (Degeneración):}  Si dos o mas variables básicas tienen el mismo cociente positivo mínimo se tiene un empate para la variable que sale. En tal caso, se selecciona una variable arbitraria y se continúa con el procedimiento. En algunas ocasiones (aunque raro) esto podría indicar que se tienen problemas.
+\end{itemize}
+
+%Pendiente
+%\section{Ejercicios propuestos}
