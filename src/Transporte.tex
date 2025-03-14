@@ -23,12 +23,18 @@
 
 	\section{Prueba de la degeneración}
 	
-	Si $R+C-1 < A$, en donde $A$ es la cantidad de asignaciones en la solución, entonces la solución es degenerada. En tal caso es necesario agregar un valor $\mathcal{E}$ (Epsilon) que nos ayude a calcular los índices de mejoramiento para todas las celdas vacías. Se puede comenzar probando la celda vacía con el costo menor.
+	Si $R+C-1 < A$, $R$ y $C$ son la cantidad de filas y columnas en la matriz de asignación, y $A$ es la cantidad de asignaciones en la solución, entonces se tiene una \textbf{solución degenerada}. En tal caso es necesario agregar un valor $\mathcal{E}$ (Epsilon) que nos ayude a calcular los índices de mejoramiento para todas las celdas vacías. Se puede comenzar probando la celda vacía con el costo menor.
+	
+	La degeneración representa una ambigüedad en la solución porque hay más grados de libertad en el problema de transporte de lo que se esperaría. Es decir, hay más posibles formas de asignar unidades de manera eficiente, pero no todas esas formas están representadas explícitamente en la tabla de asignación. La degeneración puede ocurrir cuando hay algunas celdas básicas que contienen una cantidad de cero unidades.
+	
+	En términos prácticos, la degeneración puede llevar a la dificultad para calcular los índices de mejoramiento en los métodos como el cruce del arroyo o el método MODI, ya que la cantidad de celdas básicas no es suficiente para garantizar que la solución sea bien determinada y que las mejoras puedan ser identificadas de forma directa.
 
 	\section{Prueba de optimalidad}
 	
 	\subsection{Método del cruce del Arroyo}
-	Comenzando a partir de cada celda vacía se intenta construir una trayectoria cerrada saltando horizontalmente y verticalmente hacia otras celdas, no se permiten saltos en diagonal. El índice de mejoramiento de cada celda se calcula sumando el costo de cada celda de la trayectoria alternando signos a partir de la celda vacía donde se comienza. La celda de partida siempre tiene signo positivo.
+	
+	Se calculan los \textbf{índices de mejoramiento} para todas las celdas \textbf{celdas no básicas} (vacías). 
+	Comenzando a partir de cada celda no básica se intenta construir una trayectoria cerrada saltando horizontalmente y verticalmente hacia otras \textbf{celdas básicas} (con asignación), no se permiten saltos en diagonal. El índice de mejoramiento de cada celda se calcula sumando el costo de cada celda de la trayectoria construida alternando signos a partir de la celda vacía donde se comienza. La celda de partida siempre tiene signo positivo.
 	
 	\subsection{Método de Modi}
 	
@@ -42,8 +48,22 @@
 	
 	\section{Reasignación de unidades \small{(Caso especial, mejorando la solución)}}
 	
-	Para el caso de minimización se selecciona la celda con el índice de mejoramiennto más negativo, y para el caso de maximización se busca la que contegna el índice más positivo.
+	En el caso de minimización, se selecciona la \textbf{celda no básica} (una celda sin asignación) que tenga el índice de mejoramiento más negativo, esta será nuestra nueva \textbf{celda básica} a la cual se moverán unidades de asignación y se incorporará a nuestra solución. Para el caso de maximización, se elige la celda con el índice de mejoramiento más positivo.
 	
-	Posteriormente se traza una trayectoria cerrada a partir de la celda seleccionada, como se mostró en el método del cruce del arroyo. Se marcan los signos y se selecciona la celda con signo negativo que contenga la \textbf{asignación más pequeña}. Si la solución obtenida es degenerada y una celda perteneciente a la trayectoria trazada contiene el valor Epsilon y un signo negativo no será posible mejorar la solución, por lo tanto debemos buscar otra celda para asignar el valor Epsilon y volver a calcular los índices de mejoramiento.
+	Una vez seleccionada esta celda, se traza un ciclo cerrado siguiendo el método del cruce del arroyo. En este ciclo, las celdas alternan signos, comenzando con la celda elegida como positiva.
+	
+	A continuación, se identifica la celda con signo negativo que tenga la asignación más pequeña. Esta celda se convertirá en un celda no básica. Luego, se actualizan las asignaciones dentro del ciclo cerrado:
+	
+	\begin{itemize}
+		\item Se resta el valor de la asignación de la celda seleccionada a todas las celdas con signo negativo.
+		\item Se suma ese mismo valor a todas las celdas con signo positivo.	
+	\end{itemize}
+	
+	
+	Este proceso permite mejorar la solución mientras se mantiene el balance de oferta y demanda.
+	
+	Si la solución obtenida previamente es degenerada y una celda perteneciente a la trayectoria trazada contiene el valor $\epsilon$ y un signo negativo no será posible mejorar la solución, por lo tanto debemos buscar otra celda para asignar el valor $\epsilon$ y volver a calcular los índices de mejoramiento.
+	
+	
 	%Pendiente
 	%\section{Ejercicios propuestos}
